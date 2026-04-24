@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+
+# Ambientes virtuais
+venv/
+
+# Assembly (NASM)
+*.o
+*.out
+*.bin
+*.lst
