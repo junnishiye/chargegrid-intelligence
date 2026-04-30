@@ -14,10 +14,10 @@ def VerificacaoVariavel(texto):    #usei uma funcao para impedir que valores err
     try:    #try tenta fazer algo
         valor = float(input(f"\nDigite o {texto} da recarga: "))
     except ValueError:    #ativa quando o try falha e aparece um erro, pode ser especificado ou não, nesse caso é erro de valor
-        return VerificacaoVariavel("texto")    #esse eu vou colocar só pra me relembrar no futuro, função recursiva precisa retornar ela mesma, senão quando sair vai ser NoneType
+        return VerificacaoVariavel(texto)    #esse eu vou colocar só pra me relembrar no futuro, função recursiva precisa retornar ela mesma, senão quando sair vai ser NoneType
     else:    #else funciona assim como no if, caso dê certo ele roda
         if valor <= 0:
-            return VerificacaoVariavel("texto")
+            return VerificacaoVariavel(texto)
         else:
             return valor
 
