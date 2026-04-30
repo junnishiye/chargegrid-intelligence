@@ -1,7 +1,5 @@
 import time
 
-
-
 tempoRecarga = 0
 valorRecarga = 0
 valorkWh = 0.805 * 30   #para esse carregador eu coloquei 30kWh por R$0.805 cada
