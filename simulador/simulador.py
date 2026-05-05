@@ -5,83 +5,83 @@ tempoRecarga = 0
 valorRecarga = 0
 valorkWh = 0.805 * 30   # para esse carregador: 30kWh por R$0.805 cada
 
-def CalcularRecarga(tempo, valor):
-    # verifica qual variável é 0 para calcular a outra
+def CalcularRecarga(tempo, valor):    # verifica se uma das variáveis é 0 para poder atribuir um valor nela de acordo com a outra
     if tempo == 0:
         return valorRecarga / valorkWh
     elif valor == 0:
         return tempoRecarga * valorkWh
 
-def VerificacaoVariavel(texto):
-    # impede que valores inválidos sejam aceitos
-    try:
+def VerificacaoVariavel(texto):    # usei uma função para impedir que valores errados sejam colocados nas variáveis
+    try:    # try tenta fazer algo
         valor = float(input(f"\nDigite o {texto} da recarga: "))
-    except ValueError:
-        return VerificacaoVariavel(texto)
-    else:
-        if valor <= 0:
+    except ValueError:    # ativa quando o try falha e aparece um erro, nesse caso é erro de valor
+        return VerificacaoVariavel(texto)    # função recursiva precisa retornar ela mesma, senão quando sair vai ser NoneType
+    else:    # else funciona como no if, caso dê certo ele roda
+        if valor <= 0:    # impede que valores negativos ou iguais a zero sejam aceitos
             return VerificacaoVariavel(texto)
         else:
             return valor
 
 # --- tipo de usuário com tarifa diferenciada ---
-while True:
+while True:    # mantém o usuário no loop até escolher uma opção válida
     tipoUsuario = input("""
     Tipo de usuário:
     1 - Comum
     2 - Assinante (20% de desconto)
     """)
-    if tipoUsuario in ["1", "2"]:
+    if tipoUsuario in ["1", "2"]:    # verifica se a escolha está dentro das opções permitidas
         break
     print("Opção inválida.")
 
 if tipoUsuario == "2":
-    valorkWh = valorkWh * 0.8   # aplica desconto de 20% na tarifa
+    valorkWh = valorkWh * 0.8   # aplica desconto de 20% na tarifa para assinantes
 
 # --- escolha de cobrança ---
-while True:
+while True:    # para evitar erros, o while mantém o programa no loop até que uma das opções seja escolhida
     escolhaCobranca = input("""
     Escolha uma opção (digite o número apenas)
     1 - Recarregar por tempo
     2 - Recarregar por valor
     """)
 
-    match escolhaCobranca:
+    match escolhaCobranca:    # o match serve como um if melhorado para a escolha da cobrança de recarga
         case "1":
-            tempoRecarga = VerificacaoVariavel("tempo em horas")
-            valorRecarga = CalcularRecarga(tempoRecarga, valorRecarga)
-            break
+            tempoRecarga = VerificacaoVariavel("tempo em horas")    # recebe o tempo da recarga e valida o valor
+            valorRecarga = CalcularRecarga(tempoRecarga, valorRecarga)    # calcula o valor da recarga com base no tempo
+            break    # sai do loop para continuar o código
+
         case "2":
-            valorRecarga = VerificacaoVariavel("valor")
-            tempoRecarga = CalcularRecarga(tempoRecarga, valorRecarga)
+            valorRecarga = VerificacaoVariavel("valor")    # recebe o valor da recarga e valida o valor
+            tempoRecarga = CalcularRecarga(tempoRecarga, valorRecarga)    # calcula o tempo da recarga com base no valor
             break
+
         case _:
             print("\nValor inválido, tente novamente")
 
 # --- função de recarga com barra de progresso ---
-def Recarga(tempo):
-    barraBase = "----------"
+def Recarga(tempo):                         # função para calcular o valor da recarga e mostrar uma barra de carregamento
+    barraBase = "----------"                # valor inicial da barra de carregamento
 
     print("\nRecarregando...")
 
     i = 0
-    divTempo = tempo / 10
-    contadorDiv = 0
+    divTempo = tempo / 10                   # aqui o tempo foi dividido em 10 partes iguais, para poder aumentar a barra de 10% em 10%
+    contadorDiv = 0                         # variável usada para controlar quantas partes da barra já foram preenchidas
 
-    while i < tempo:
-        if i > divTempo * contadorDiv:
+    while i < tempo:                        # loop para fazer o carregamento demorar de acordo com o tempo colocado inicialmente
+        if i > divTempo * contadorDiv:      # a cada parte do tempo concluída, uma parte da barra é preenchida
             contadorDiv += 1
-            barra = barraBase.replace("-", "*", contadorDiv)
-            print(f"\r[{barra}]", end="")
+            barra = barraBase.replace("-", "*", contadorDiv)    # troca "-" por "*" uma certa quantidade de vezes, definida pelo contadorDiv
+            print(f"\r[{barra}]", end="")                       # o \r volta para o começo da linha e o end evita pular linha
 
-        time.sleep(0.1)
-        i += 0.1
+        time.sleep(0.1)                     # importado da biblioteca time, o sleep faz o código esperar um pouco antes de continuar
+        i += 0.1                            # o aumento é menor que o normal para poder contar valores flutuantes
 
     print("\nRecarregado ^_^")
     print("Agradecemos por escolher os nossos serviços!")
 
 # --- confirmação e relatório ---
-while True:
+while True:    # mantém o usuário no loop até responder corretamente se deseja prosseguir ou não
     escolhaRecarga = input(
         f"""
 Valor da recarga: R${valorRecarga:.2f}
@@ -89,12 +89,14 @@ Tempo de espera: {tempoRecarga:.2f} horas
 
 Deseja prosseguir com a recarga? (s/n)
         """
-    ).lower()
+    ).lower()    # transforma a resposta em minúscula para aceitar respostas como "S", "Sim", "NÃO", etc.
 
     if escolhaRecarga in ["s", "sim"]:
-        horarioInicio = datetime.datetime.now()   # registra início
-        Recarga(tempoRecarga)
-        horarioFim = datetime.datetime.now()      # registra fim
+        horarioInicio = datetime.datetime.now()   # registra o horário de início da recarga
+
+        Recarga(tempoRecarga)                     # chama a função que simula a recarga
+
+        horarioFim = datetime.datetime.now()      # registra o horário de fim da recarga
 
         print(f"""
 ╔══════════════════════════════════╗
@@ -107,12 +109,12 @@ Deseja prosseguir com a recarga? (s/n)
   Energia consumida: {tempoRecarga * 30:.2f} kWh
   Custo total     : R${valorRecarga:.2f}
 ╚══════════════════════════════════╝
-        """)
+        """)    # relatório final mostrando os dados principais da sessão de recarga
         break
 
     elif escolhaRecarga in ["n", "nao", "não"]:
         print("Obrigado por escolher nossos serviços, tenha um ótimo dia")
-        quit()
+        quit()    # encerra o programa caso o usuário não queira continuar
 
     else:
-        print("Resposta inválida.")
+        print("Resposta inválida.")    # caso o usuário digite algo diferente de sim ou não
