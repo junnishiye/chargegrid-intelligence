@@ -1,5 +1,6 @@
 Documentação Lógica: Simulador de Sessão de Recarga
 1. Visão Geral do Sistema
+   
 O programa foi desenvolvido em Python com o objetivo de simular uma estação de recarga para veículos elétricos. Ele permite que o usuário escolha seu perfil (Comum ou Assinante), o formato de cobrança (por tempo ou por valor) e exibe um relatório detalhado ao final do processo.
 
 2. Estruturação e Modularização
