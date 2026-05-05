@@ -1,11 +1,11 @@
-
+# -*- coding: utf-8 -*-
 import tkinter as tk
 from tkinter import ttk, messagebox
 import datetime
 import time
 import threading
 
-# ??? constantes ???????????????????????????????????????????????????????????????
+# ─── constantes ───────────────────────────────────────────────────────────────
 TARIFA_BASE = 0.805 * 30   # R$ por hora (30 kWh * R$0.805)
 DESCONTO_ASSINANTE = 0.20
 
@@ -22,7 +22,7 @@ FONTE_LABEL    = ("Courier New", 11)
 FONTE_VALOR    = ("Courier New", 13, "bold")
 FONTE_RELATORIO= ("Courier New", 10)
 
-# ??? l�gica de c�lculo ????????????????????????????????????????????????????????
+# ─── lógica de cálculo ────────────────────────────────────────────────────────
 def calcular_tarifa(tipo_usuario):
     tarifa = TARIFA_BASE
     if tipo_usuario == "2":
@@ -35,7 +35,7 @@ def calcular_por_tempo(tempo, tarifa):
 def calcular_por_valor(valor, tarifa):
     return valor / tarifa
 
-# ??? janela principal ?????????????????????????????????????????????????????????
+# ─── janela principal ─────────────────────────────────────────────────────────
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -52,10 +52,10 @@ class App(tk.Tk):
         self.geometry(f"{w}x{h}+{x}+{y}")
 
     def _construir_ui(self):
-        # t�tulo
-        tk.Label(self, text="? RECARGA EV", font=FONTE_TITULO,
+        # título
+        tk.Label(self, text="⚡ RECARGA EV", font=FONTE_TITULO,
                  bg=COR_FUNDO, fg=COR_VERDE).pack(pady=(28, 4))
-        tk.Label(self, text="Simulador de Sess�o de Recarga",
+        tk.Label(self, text="Simulador de Sessão de Recarga",
                  font=("Courier New", 10), bg=COR_FUNDO,
                  fg=COR_TEXTO_DIM).pack(pady=(0, 20))
 
@@ -64,8 +64,8 @@ class App(tk.Tk):
                           highlightthickness=1)
         painel.pack(padx=32, fill="x")
 
-        # ?? tipo de usu�rio ??
-        self._secao(painel, "TIPO DE USU�RIO")
+        # ── tipo de usuário ──
+        self._secao(painel, "TIPO DE USUÁRIO")
         self.var_tipo = tk.StringVar(value="1")
         for val, txt in [("1", "Comum"), ("2", "Assinante  (20% de desconto)")]:
             tk.Radiobutton(painel, text=txt, variable=self.var_tipo, value=val,
@@ -75,8 +75,8 @@ class App(tk.Tk):
 
         self._divisor(painel)
 
-        # ?? modo de cobran�a ??
-        self._secao(painel, "MODO DE COBRAN�A")
+        # ── modo de cobrança ──
+        self._secao(painel, "MODO DE COBRANÇA")
         self.var_modo = tk.StringVar(value="1")
         for val, txt in [("1", "Por tempo (horas)"), ("2", "Por valor (R$)")]:
             tk.Radiobutton(painel, text=txt, variable=self.var_modo, value=val,
@@ -87,7 +87,7 @@ class App(tk.Tk):
 
         self._divisor(painel)
 
-        # ?? entrada ??
+        # ── entrada ──
         self._secao(painel, "DADOS DA RECARGA")
         frame_entrada = tk.Frame(painel, bg=COR_PAINEL)
         frame_entrada.pack(padx=20, pady=(4, 16), fill="x")
@@ -109,7 +109,7 @@ class App(tk.Tk):
                                    bg=COR_PAINEL, fg=COR_ERRO)
         self.label_erro.pack(anchor="w")
 
-        # ?? bot�o ??
+        # ── botão ──
         self.btn = tk.Button(self, text="INICIAR RECARGA",
                              font=("Courier New", 12, "bold"),
                              bg=COR_VERDE, fg=COR_FUNDO,
@@ -119,7 +119,7 @@ class App(tk.Tk):
                              command=self._iniciar)
         self.btn.pack(padx=32, pady=20, fill="x", ipady=10)
 
-        # ?? barra de progresso ??
+        # ── barra de progresso ──
         self.label_status = tk.Label(self, text="",
                                      font=("Courier New", 10),
                                      bg=COR_FUNDO, fg=COR_TEXTO_DIM)
@@ -135,11 +135,11 @@ class App(tk.Tk):
         self.progress.configure(style="green.Horizontal.TProgressbar")
         self.progress.pack(padx=32, pady=(4, 0))
 
-        # ?? relat�rio ??
+        # ── relatório ──
         self.frame_relatorio = tk.Frame(self, bg=COR_FUNDO)
         self.frame_relatorio.pack(padx=32, pady=16, fill="x")
 
-    # ?? helpers de layout ??????????????????????????????????????????????????????
+    # ── helpers de layout ──────────────────────────────────────────────────────
     def _secao(self, pai, titulo):
         tk.Label(pai, text=titulo, font=("Courier New", 9, "bold"),
                  bg=COR_PAINEL, fg=COR_VERDE).pack(anchor="w", padx=20, pady=(14, 2))
@@ -155,7 +155,7 @@ class App(tk.Tk):
         self.entry.delete(0, tk.END)
         self.label_erro.config(text="")
 
-    # ?? valida��o e in�cio ?????????????????????????????????????????????????????
+    # ── validação e início ─────────────────────────────────────────────────────
     def _iniciar(self):
         texto = self.entry.get().strip().replace(",", ".")
         try:
@@ -163,7 +163,7 @@ class App(tk.Tk):
             if valor_entrada <= 0:
                 raise ValueError
         except ValueError:
-            self.label_erro.config(text="? Digite um n�mero v�lido maior que zero.")
+            self.label_erro.config(text="⚠ Digite um número válido maior que zero.")
             return
 
         self.label_erro.config(text="")
@@ -180,12 +180,12 @@ class App(tk.Tk):
         threading.Thread(target=self._simular_recarga,
                          args=(tempo, valor), daemon=True).start()
 
-    # ?? simula��o com barra ????????????????????????????????????????????????????
+    # ── simulação com barra ────────────────────────────────────────────────────
     def _simular_recarga(self, tempo, valor):
         horario_inicio = datetime.datetime.now()
         passos = 100
         intervalo = (tempo * 3600) / passos   # tempo real em segundos por passo
-        intervalo = min(intervalo, 0.05)       # limita a 5s total na simula��o
+        intervalo = min(intervalo, 0.05)       # limita a 5s total na simulação
 
         for i in range(passos + 1):
             pct = i
@@ -200,29 +200,29 @@ class App(tk.Tk):
         self.progress["value"] = pct
         self.label_status.config(text=f"Recarregando... {pct}%")
 
-    # ?? relat�rio final ????????????????????????????????????????????????????????
+    # ── relatório final ────────────────────────────────────────────────────────
     def _mostrar_relatorio(self, tempo, valor, inicio, fim):
-        self.label_status.config(text="Recarregado ?")
+        self.label_status.config(text="Recarregado ✓")
         self.progress["value"] = 100
 
-        tipo_txt = "Assinante (?20%)" if self.var_tipo.get() == "2" else "Comum"
+        tipo_txt = "Assinante (–20%)" if self.var_tipo.get() == "2" else "Comum"
         energia  = tempo * 30
 
-        # limpa relatário anterior
+        # limpa relatório anterior
         for w in self.frame_relatorio.winfo_children():
             w.destroy()
 
         linhas = [
-            ("?" * 46, COR_BORDA),
-            ("  RELATÁRIO DA SESSÃO", COR_VERDE),
-            ("?" * 46, COR_BORDA),
+            ("─" * 46, COR_BORDA),
+            ("  RELATÓRIO DA SESSÃO", COR_VERDE),
+            ("─" * 46, COR_BORDA),
             (f"  Tipo de usuário  : {tipo_txt}", COR_TEXTO),
             (f"  Início           : {inicio.strftime('%H:%M:%S')}", COR_TEXTO),
             (f"  Fim              : {fim.strftime('%H:%M:%S')}", COR_TEXTO),
             (f"  Tempo de recarga : {tempo:.2f} h", COR_TEXTO),
             (f"  Energia consumida: {energia:.2f} kWh", COR_TEXTO),
             (f"  Custo total      : R$ {valor:.2f}", COR_VERDE),
-            ("?" * 46, COR_BORDA),
+            ("─" * 46, COR_BORDA),
         ]
 
         for txt, cor in linhas:
@@ -241,7 +241,7 @@ class App(tk.Tk):
             w.destroy()
         self.btn.config(text="INICIAR RECARGA", command=self._iniciar)
 
-# ??? entrada ??????????????????????????????????????????????????????????????????
+# ─── entrada ──────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
     app = App()
     app.mainloop()
