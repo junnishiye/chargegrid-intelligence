@@ -1,6 +1,33 @@
 import time
 import datetime
 
+class Usuario:  #cria um classe para poder gerar um formulário de usuário
+    nome = ""   #não usei uma função construtora, porque eu queria que fosse contruido pelo input, e não ao instanciar
+    nascimento = ""
+    endereco = ""
+    telefone = ""
+    cpf = ""
+    email = ""
+
+    def Formulario(self):   #o self é usado para guardar as informações da instância, e não pegar da classe em geral
+        self.nome = input("Digite o seu nome: ")
+        self.nascimento = input("Digite a sua data de nascimento: ")
+        self.endereco = input("Digite o seu endereço: ")
+        self.telefone = input("Digite o seu telefone: ")
+        self.cpf = input("Digite o seu cpf: ")
+        self.email = input("Digite o seu e-mail: ")
+
+    def MostrarUsuario(self):   #basicamente mostra todas as variáveis criadas com a função acima
+        print(f"""
+nome: {self.nome}
+nascimento: {self.nascimento}
+endereço: {self.endereco}
+telefone: {self.telefone}
+cpf: {self.cpf}
+email: {self.email}
+""")
+
+
 tempoRecarga = 0
 valorRecarga = 0
 valorkWh = 0.805 * 30   # para esse carregador: 30kWh por R$0.805 cada
@@ -27,14 +54,38 @@ while True:    # mantém o usuário no loop até escolher uma opção válida
     tipoUsuario = input("""
     Tipo de usuário:
     1 - Comum
-    2 - Assinante (20% de desconto)
-    """)
+    2 - Assinante (5% de desconto)  
+    """)    #diminui o desconto porque 20% é muita coisa
     if tipoUsuario in ["1", "2"]:    # verifica se a escolha está dentro das opções permitidas
         break
     print("Opção inválida.")
 
 if tipoUsuario == "2":
-    valorkWh = valorkWh * 0.8   # aplica desconto de 20% na tarifa para assinantes
+    print("Para se tornar assinante, é necessário preencher um simples formulário ")
+    escolha = input("Deseja continuar? (s/n) ").lower()
+
+    while True:
+        if escolha in ["s", "sim"]:
+            usuarioTeste = Usuario()    #aqui foi criado uma nova instancia da classe usuário
+            usuarioTeste.Formulario()   #e aqui usa a função criada na classe
+
+            print("\n---------------------------------------")
+            print("Confirme as informações")
+            usuarioTeste.MostrarUsuario()   #mostra as informações usando a função da classe
+            confirmacao = input("As informações estão corretas? (s/n) ").lower()
+
+            if confirmacao in ["s", "sim"]:
+                valorkWh = valorkWh * 0.95   # aplica desconto de 5% na tarifa para assinantes
+                break
+
+            else:
+                print("Por favor, repita o preenchimento do formulário\n")
+
+        elif escolha in ["n", "não", "nao"]:
+            break
+
+        else:
+            print("Valor inválido")
 
 # --- escolha de cobrança ---
 while True:    # para evitar erros, o while mantém o programa no loop até que uma das opções seja escolhida
