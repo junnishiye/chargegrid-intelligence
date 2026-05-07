@@ -62,9 +62,11 @@ while True:    # mantém o usuário no loop até escolher uma opção válida
 
 if tipoUsuario == "2":
     print("Para se tornar assinante, é necessário preencher um simples formulário ")
-    escolha = input("Deseja continuar? (s/n) ").lower()
+
 
     while True:
+        escolha = input("Deseja continuar? (s/n) ").lower()
+
         if escolha in ["s", "sim"]:
             usuarioTeste = Usuario()    #aqui foi criado uma nova instancia da classe usuário
             usuarioTeste.Formulario()   #e aqui usa a função criada na classe
