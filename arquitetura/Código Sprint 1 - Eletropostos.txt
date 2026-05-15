@@ -1,0 +1,99 @@
+# =====================================
+# Controle de carga - Projeto EV Challenge
+# RISC-V Assembly
+# =====================================
+
+        .data
+
+TENSOES:    .word 45, 48, 52, 55, 49, 50, 53
+LIMITE:     .word 50
+CHARGE:     .word 0
+
+MSG_TENSAO: .asciz "Tensão: "
+MSG_CARGA:  .asciz " | Carga: "
+TXT_LIGADA: .asciz "Ligada"
+TXT_DESLIG: .asciz "Desligada"
+NEWLINE:    .asciz "\n"
+
+        .text
+        .globl _start
+
+_start:
+
+        la t0, TENSOES       # ponteiro para o array
+        li t1, 7             # quantidade de elementos
+        li t2, 0             # índice inicial
+
+loop:
+
+        lw t3, 0(t0)         # carrega tensão atual
+        lw t4, LIMITE        # carrega limite
+
+        blt t3, t4, LIGAR    # se tensão < limite -> ligar
+        j DESLIGAR           # senão -> desligar
+
+LIGAR:
+
+        li t5, 1             # carga ligada
+        la t6, CHARGE
+        sw t5, 0(t6)
+
+        j PRINT_STATUS
+
+DESLIGAR:
+
+        li t5, 0             # carga desligada
+        la t6, CHARGE
+        sw t5, 0(t6)
+
+PRINT_STATUS:
+
+        # imprime "Tensão: "
+        la a0, MSG_TENSAO
+        li a7, 4
+        ecall
+
+        # imprime valor da tensão
+        mv a0, t3
+        li a7, 1
+        ecall
+
+        # imprime " | Carga: "
+        la a0, MSG_CARGA
+        li a7, 4
+        ecall
+
+        # verifica estado da carga
+        beq t5, x0, PRINT_DESLIG
+
+        # imprime "Ligada"
+        la a0, TXT_LIGADA
+        li a7, 4
+        ecall
+
+        j PRINT_NEWLINE
+
+PRINT_DESLIG:
+
+        # imprime "Desligada"
+        la a0, TXT_DESLIG
+        li a7, 4
+        ecall
+
+PRINT_NEWLINE:
+
+        # quebra de linha
+        la a0, NEWLINE
+        li a7, 4
+        ecall
+
+        # próximo elemento do vetor
+        addi t2, t2, 1
+        addi t0, t0, 4
+
+        # continua enquanto houver elementos
+        blt t2, t1, loop
+
+        # encerra o programa
+        li a7, 10
+        ecall
