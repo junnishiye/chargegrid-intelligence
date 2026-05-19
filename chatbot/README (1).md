@@ -140,28 +140,3 @@ Perguntas esperadas e respostas ideais para validação na Sprint 2:
 
 ---
 
-## Estrutura do repositório
-
-```
-/
-├── README.md
-├── docs/
-│   └── fluxograma.png
-├── src/
-│   └── chatbot_sprint01.ipynb
-└── entrega/
-    └── entrega_sprint1.txt
-```
-
----
-
-## Próximos passos — Sprint 2
-
-- Substituir `InMemoryVectorStore` por Chroma para persistência entre sessões.
-- Refinar o system prompt com base nos resultados do modelo de teste.
-- Adicionar memória de conversa para perguntas de acompanhamento.
-- Avaliar qualidade das respostas via LangSmith.
-- Implementar interface de chat acessível (Streamlit ou Gradio).
-
----
-
