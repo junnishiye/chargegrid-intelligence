@@ -1,0 +1,93 @@
+================================================================
+EXPRESSÃO BOOLEANA — CIRCUITO DE AUTORIZAÇÃO DE SESSÃO DE RECARGA
+ChargeGrid Intelligence | EV Challenge 2026 | FIAP + GoodWe
+================================================================
+
+INTEGRANTES:
+| Nome               |     RM |
+| ----------------   | -----: |
+| Davi Sinhorini     | 569487 |
+| Gabriel da Silva   | 568910 |
+| Henrique de Souza  | 570529 |
+| André Balan        | 571691 |
+| João Vitor Jun     | 572079 |
+
+DISCIPLINA: Computer Science 
+
+----------------------------------------------------------------
+1. VARIÁVEIS DE ENTRADA
+----------------------------------------------------------------
+
+A = Usuário autenticado (RFID ou cartão válido)
+    0 = Não autenticado
+    1 = Autenticado
+
+B = Vaga disponível no eletroposto
+    0 = Sem vaga
+    1 = Vaga disponível
+
+C = Energia suficiente na rede
+    0 = Energia insuficiente
+    1 = Energia suficiente
+
+----------------------------------------------------------------
+2. VARIÁVEL DE SAÍDA
+----------------------------------------------------------------
+
+S = Sessão de recarga autorizada
+    0 = Sessão NEGADA
+    1 = Sessão AUTORIZADA
+
+----------------------------------------------------------------
+3. EXPRESSÃO BOOLEANA COMPLETA
+----------------------------------------------------------------
+
+S = (A · B) + (B · C)
+
+Onde:
+  · representa a operação AND (E lógico)
+  + representa a operação OR  (OU lógico)
+
+----------------------------------------------------------------
+4. EXPRESSÃO SIMPLIFICADA
+----------------------------------------------------------------
+
+Fatorando B (fator comum nos dois termos):
+
+S = B · (A + C)
+
+Interpretação direta:
+  A sessão é autorizada quando a VAGA ESTÁ DISPONÍVEL (B=1)
+  E pelo menos uma das condições abaixo for verdadeira:
+    - O usuário está autenticado (A=1)
+    - A energia é suficiente (C=1)
+
+----------------------------------------------------------------
+5. PORTAS LÓGICAS UTILIZADAS
+----------------------------------------------------------------
+
+Porta AND 1  →  Processa: A · B
+Porta AND 2  →  Processa: B · C
+Porta OR     →  Processa: (A · B) + (B · C) = S
+
+----------------------------------------------------------------
+6. JUSTIFICATIVA DA EXPRESSÃO
+----------------------------------------------------------------
+
+A expressão S = (A · B) + (B · C) foi escolhida para modelar
+o sistema de autorização do ChargeGrid Intelligence porque:
+
+- B é a condição necessária: sem vaga disponível, nenhuma
+  sessão pode ser iniciada, independente das outras variáveis.
+
+- A combinação A · B representa o caso principal: usuário
+  autenticado em vaga disponível (sessão completa e tarifada).
+
+- A combinação B · C representa o caso secundário: vaga
+  disponível com energia suficiente, permitindo sessões em
+  modo de acesso simplificado (ex: pré-pago ou emergência).
+
+- A porta OR garante que qualquer uma das duas condições
+  válidas seja suficiente para autorizar a sessão.
+
+
