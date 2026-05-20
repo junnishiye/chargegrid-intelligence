@@ -1,43 +1,94 @@
-# ChargeGrid Intelligence
+# ChargeGrid Intelligence — EV Challenge 2026
 
-Sistema inteligente para simulação, análise e gerenciamento de recarga de veículos elétricos em ambiente comercial.
+Projeto desenvolvido para a **Challenge Sprint 1** da FIAP, turma **1CCPQ**, no contexto do desafio **GoodWe / EV Challenge 2026**.
 
-Este repositório reúne os entregáveis desenvolvidos para o projeto **ChargeGrid Intelligence**, com foco em controle de potência, simulação de sessões de recarga, análise matemática, organização de dados, documentação técnica e materiais de apresentação.
+## Visão Geral
 
-## Sobre o projeto
+O **ChargeGrid Intelligence** é uma proposta de sistema inteligente para gerenciamento de recarga de veículos elétricos em ambientes comerciais.
 
-O **ChargeGrid Intelligence** propõe uma solução para o gerenciamento automatizado de eletropostos comerciais, considerando desafios como:
+A solução busca apoiar a expansão de carregadores elétricos do ambiente residencial para o ambiente comercial, considerando desafios como:
 
-- Controle da demanda de energia;
-- Gerenciamento de múltiplas sessões de recarga;
-- Simulação de cobrança por energia consumida;
-- Aplicação de regras de potência;
-- Integração conceitual com protocolos como OCPP e MODBUS;
-- Organização de dados e geração de relatórios.
+- Gerenciamento inteligente de demanda de energia;
+- Controle de potência em eletropostos;
+- Registro de sessões de recarga;
+- Tarifação e pagamento;
+- Integração com protocolos e sistemas externos;
+- Uso de dados, automação e inteligência artificial para otimização.
 
-A ideia central é simular como uma plataforma poderia controlar sessões de recarga em um ambiente comercial, registrando informações relevantes e aplicando regras de operação de forma inteligente.
+O projeto simula e documenta diferentes partes de uma plataforma capaz de monitorar, controlar e analisar sessões de recarga em eletropostos comerciais, utilizando conceitos de programação, matemática, arquitetura computacional, lógica digital, dados, sustentabilidade e IA.
 
-## Objetivos
+---
 
-- Simular sessões de recarga de veículos elétricos;
-- Controlar potência disponível entre diferentes usuários;
-- Registrar dados das sessões;
-- Calcular consumo e custo estimado;
-- Organizar os entregáveis técnicos do projeto;
-- Demonstrar a evolução do sistema ao longo das sprints.
+## Informações da Sprint
 
-## Estrutura do repositório
+| Campo | Informação |
+|---|---|
+| Turma | 1CCPQ |
+| Ano | 2026 |
+| Sprint | Sprint 1 |
+| Período de entrega | 22/04/2026 - 22/05/2026 |
+| Tema | ChargeGrid Intelligence |
+| Empresa/Challenge | GoodWe / EV Challenge 2026 |
+
+---
+
+## Integrantes
+
+| Nome | RM |
+|---|---|
+| João Vitor Jun Nishiye de Sousa | 572079 |
+| Davi | 569487 |
+| Gabriel | 568910 |
+| Integrante | 570529 |
+| André | 571691 |
+
+> Observação: atualizar os nomes completos dos integrantes caso necessário.
+
+---
+
+## Problema
+
+Com a expansão da mobilidade elétrica, eletropostos comerciais passam a exigir soluções mais inteligentes do que carregadores residenciais tradicionais.
+
+Entre os principais problemas identificados estão:
+
+- Sobrecarga de energia em horários de pico;
+- Ausência de controle eficiente da potência entregue;
+- Dificuldade para registrar ciclos de recarga;
+- Falta de padronização entre equipamentos e sistemas;
+- Desafios na cobrança e monetização das recargas;
+- Baixa integração entre carregadores, usuários, operadores e sistemas externos;
+- Necessidade de uso mais eficiente de energia renovável.
+
+---
+
+## Proposta de Solução
+
+A proposta do **ChargeGrid Intelligence** é estruturar uma plataforma de apoio ao gerenciamento de recarga comercial, permitindo:
+
+- Simular sessões de recarga;
+- Calcular energia consumida e custo da sessão;
+- Aplicar regras de tarifação;
+- Representar logicamente decisões de controle;
+- Analisar matematicamente o comportamento da potência;
+- Utilizar dados para gerar insights;
+- Planejar um chatbot operacional para suporte ao usuário ou operador;
+- Relacionar a solução com sustentabilidade, eficiência energética e energias renováveis.
+
+---
+
+## Estrutura do Repositório
 
 ```bash
 chargegrid-intelligence/
-├── arquitetura/        # Diagramas, organização da solução e visão estrutural do sistema
-├── chatbot/            # Materiais ou protótipos relacionados ao chatbot do projeto
-├── circuito_logico/    # Simulações, lógica de circuito ou materiais relacionados ao Tinkercad/Arduino
-├── dados/              # Arquivos de dados utilizados ou gerados pelo projeto
-├── docs/               # Documentação técnica, PDFs e materiais explicativos
-├── matematica/         # Modelagem matemática e análises computacionais
-├── simulador/          # Código principal de simulação do sistema de recarga
-├── videos/             # Roteiros, links ou materiais usados na gravação dos vídeos
+├── arquitetura/          # Proposta ligada à arquitetura de computadores e eficiência computacional
+├── chatbot/              # Planejamento do chatbot GoodWe e modelo de IA
+├── circuito_logico/      # Circuito lógico, expressão booleana e tabela verdade
+├── dados/                # Base de dados, análise em Python e insights
+├── docs/                 # Documentações, apresentações e arquivos de apoio
+├── matematica/           # Resolução matemática da função de potência P(t)
+├── simulador/            # Simulador de sessão de recarga em Python
+├── videos/               # Links ou arquivos relacionados aos vídeos pitch
 ├── .gitignore
 ├── LICENSE
 └── README.md
